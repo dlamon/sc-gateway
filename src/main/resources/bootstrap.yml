@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    consul:
+      host: 192.168.99.103
+      port: 8500
+    config:
+      name: gateway
+      profile: dev
+      fail-fast: true
+      discovery:
+        enabled: true
+        service-id: config
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: product_route
+        uri: lb://product/product/list
+        predicates:
+          - Method=POST
