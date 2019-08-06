@@ -1,3 +1,4 @@
+
 spring:
   cloud:
     consul:
@@ -15,17 +16,17 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-          predicates[0]:
-            name: Path
-            args[pattern]: "'/order/**'"
           filters[0]:
-            name: RewritePath
-            args[regexp]: "'/order/(?<remaining>.*)'"
-            args[replacement]: "'/${remaining}'"
+            name: AddRequestParameter
+            args:
+              name: "'foo'"
+              value: "'bar'"
       routes:
       - id: repeat_product_route
         uri: lb://product
         predicates:
         - Path= /repeat-product/**
+        - Method=GET
         filters:
         - StripPrefix=1
+trace: true
