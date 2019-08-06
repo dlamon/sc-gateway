@@ -14,8 +14,18 @@ spring:
       discovery:
         locator:
           enabled: true
+          lower-case-service-id: true
+          predicates[0]:
+            name: Path
+            args[pattern]: "'/order/**'"
+          filters[0]:
+            name: RewritePath
+            args[regexp]: "'/order/(?<remaining>.*)'"
+            args[replacement]: "'/${remaining}'"
       routes:
-      - id: product_route
-        uri: lb://product/product/list
+      - id: repeat_product_route
+        uri: lb://product
         predicates:
-          - Method=POST
+        - Path= /repeat-product/**
+        filters:
+        - StripPrefix=1
