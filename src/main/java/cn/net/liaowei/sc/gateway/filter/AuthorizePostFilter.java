@@ -28,6 +28,6 @@ public class AuthorizePostFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return Integer.MAX_VALUE - 1;
     }
 }
